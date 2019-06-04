@@ -28,26 +28,26 @@ function fillTable(){
     for (let i=0; i< allAuthorsID.length; i++){
         exDataJSON = window.localStorage.getItem(allAuthorsID[i]);
         exDataObject = JSON.parse(exDataJSON);
-        addRow('authorsTable', exDataObject['firstName'], exDataObject['patronymicName'], exDataObject['lastName'], exDataObject['birthday'], exDataObject['books']);
+        addRow('authorsTable', allAuthorsID[i], exDataObject['firstName'], exDataObject['patronymicName'], exDataObject['lastName'], exDataObject['birthday'], exDataObject['books']);
     }
     delBtnArr = document.querySelectorAll('.delBtn');
-    console.log(delBtnArr.length);  
+ 
     for (let i=0; i<delBtnArr.length; i++){
     delBtnArr[i].addEventListener('click', delItem, false);
     }
 }
 
 function delItem(){
-    console.log(this.parentElement.parentElement)
+    console.log(this.getAttribute('id'));
     this.parentElement.parentElement.parentElement.removeChild(this.parentElement.parentElement);
-    
+    localStorage.removeItem(this.getAttribute('id'));
 }
 
 document.getElementById('addAuthor').addEventListener('click', addAuthor, false);
 
-function addRow(id, td1Text, td2Text, td3Text, td4Text, td5Text){
+function addRow(id, key, td1Text, td2Text, td3Text, td4Text, td5Text){
     booksArr=td5Text.split(', ');
-    
+    console.log(typeof(key));
     var tbody = document.getElementById(id);
     var row = document.createElement("tr")
     var  td1= document.createElement("td")
@@ -68,7 +68,9 @@ function addRow(id, td1Text, td2Text, td3Text, td4Text, td5Text){
     }
     td5.appendChild(ul)
     var td6 = document.createElement("td")
-    var delBtn=document.createElement('button')
+    var delBtn=document.createElement('button');
+    delBtn.addEventListener('click', delItem, false);
+    delBtn.setAttribute('id', key);
     delBtn.classList.add('btn', 'btn-dark', 'delBtn');
     var delImg = document.createElement('img');
     delImg.setAttribute('src', 'img/iconfinder_trashcan-delete_60097.png')
@@ -96,7 +98,7 @@ function addAuthor(){
    
     var newAuthorToTable = window.localStorage.getItem(authorID);
     var newAuthorData = JSON.parse(newAuthorToTable); 
-    addRow('authorsTable', newAuthorData['firstName'], newAuthorData['patronymicName'], newAuthorData['lastName'], newAuthorData['birthday'], newAuthorData['books']);
+    addRow('authorsTable', authorID, newAuthorData['firstName'], newAuthorData['patronymicName'], newAuthorData['lastName'], newAuthorData['birthday'], newAuthorData['books']);
 }
 
 
