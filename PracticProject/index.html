@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- page header -->
+    <header class='bg-dark text-light row'>
+        <!-- logo -->
+        <div class='col-4'>
+            <a href="#"><img src="img\iconfinder_Books_82262.png" alt=""></a>
+        </div>
+        <!-- title -->
+        <div class='col-8'>
+            <h1>Library</h1>
+        </div>
+    </header>
+
+    <!-- main section -->
+
+    <!-- navigation -->
+    <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                aria-selected="true">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="library-tab" data-toggle="tab" href="#library" role="tab" aria-controls="library"
+                aria-selected="false">Library</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="authors-tab" data-toggle="tab" href="#authors" role="tab" aria-controls="authors"
+                aria-selected="false">Authors DB</a>
+        </li>
+    </ul>
+    <!-- content of the sections -->
+    <div class="tab-content" id="myTabContent">
+        <!-- home-section content -->
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+        <!-- library-section content -->
+        <div class="tab-pane fade" id="library" role="tabpanel" aria-labelledby="library-tab">
+           
+        </div>
+        <!-- authors-section content -->
+        <div class="tab-pane fade" id="authors" role="tabpanel" aria-labelledby="authors-tab">
+                <div class='row'>
+                        <div class='col-7'>
+                            <table class="table table-striped">
+                                <thead class='thead-dark'>
+                                    <tr>
+                                        <th scope="col">First name</th>
+                                        <th scope="col">Patronymic name</th>
+                                        <th scope="col">Last nane</th>
+                                        <th scope="col">Birthday</th>
+                                        <th scope="col">Books</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='authorsTable'>
+                                    <!-- <tr>
+                                        <th scope="row">Gtrex</th>
+                                        <td></td>
+                                        <td>Mark</td>
+                                        <td>13.03.1980</td>
+                                        <td>
+                                            <ol>
+                                                <li>Lorem ipsum dolor sit amet.</li>
+                                                <li>Lorem ipsum dolor sit amet.</li>
+                                            </ol>
+                                        </td>
+                                        <td>
+                                            <button type="button" class='btn btn-dark'>
+                                                <img src="img\iconfinder_trashcan-delete_60097.png" alt="">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Gtrex</th>
+                                        <td></td>
+                                        <td>Mark</td>
+                                        <td>13.03.1980</td>
+                                        <td>
+                                            <ol>
+                                                <li>Lorem ipsum dolor sit amet.</li>
+                                                <li>Lorem ipsum dolor sit amet.</li>
+                                            </ol>
+                                        </td>
+                                        <td>
+                                                <button type="button" class='btn btn-dark'>
+                                                    <img src="img\iconfinder_trashcan-delete_60097.png" alt="">
+                                                </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Gtrex</th>
+                                        <td></td>
+                                        <td>Mark</td>
+                                        <td>13.03.1980</td>
+                                        <td>
+                                            <ol>
+                                                <li>Lorem ipsum dolor sit amet.</li>
+                                                <li>Lorem ipsum dolor sit amet.</li>
+                                            </ol>
+                                        </td>
+                                        <td>
+                                                <button type="button" class='btn btn-dark'>
+                                                    <img src="img\iconfinder_trashcan-delete_60097.png" alt="">
+                                                </button>
+                                        </td>
+                                    </tr> -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class='col-5'>
+                            <form class="needs-validation" actio='#' method="POST" novalidate>
+                                <div class="form-row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="firstName">First name</label>
+                                        <input type="text" class="form-control" id="firstName" placeholder="First name" required>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                            <label for="patronymicName">Patronymic name</label>
+                                            <input type="text" class="form-control" id="patronymicName" placeholder="Patronymic name">
+                                            
+                                        </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="lastName">Last name</label>
+                                        <input type="text" class="form-control" id="lastName" placeholder="Last name" required>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                       
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                        <label for="birthday">Birthday</label>
+                                        <input type="date" class="form-control" id="birthday" required>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid date.
+                                        </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-7 mb-3">
+                                            <label for="booksField">Books</label>
+                                            <textarea  class="form-control" id="booksField" placeholder="JavaScript Patterns, Python Cookbook, T-SQL Fundamentals"></textarea>
+                                            <small class="form-text text-muted">Input books name inline with comma separated</small>
+                                    </div>
+                                </div>
+            
+                    
+                                <button id='addAuthor' class="btn btn-dark" type="button">Add author</button>
+                            </form>
+                        </div>
+                        </div>
+        </div>
+    </div>
+    <script src='main.js'></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
