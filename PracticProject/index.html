@@ -46,123 +46,139 @@
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
         <!-- library-section content -->
         <div class="tab-pane fade" id="library" role="tabpanel" aria-labelledby="library-tab">
-           
+
         </div>
         <!-- authors-section content -->
         <div class="tab-pane fade" id="authors" role="tabpanel" aria-labelledby="authors-tab">
-                <div class='row'>
-                        <div class='col-7'>
-                            <table class="table table-striped">
-                                <thead class='thead-dark'>
-                                    <tr>
-                                        <th scope="col">First name</th>
-                                        <th scope="col">Patronymic name</th>
-                                        <th scope="col">Last nane</th>
-                                        <th scope="col">Birthday</th>
-                                        <th scope="col">Books</th>
-                                        <th scope="col">Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody id='authorsTable'>
-                                    <!-- <tr>
-                                        <th scope="row">Gtrex</th>
-                                        <td></td>
-                                        <td>Mark</td>
-                                        <td>13.03.1980</td>
-                                        <td>
-                                            <ol>
-                                                <li>Lorem ipsum dolor sit amet.</li>
-                                                <li>Lorem ipsum dolor sit amet.</li>
-                                            </ol>
-                                        </td>
-                                        <td>
-                                            <button type="button" class='btn btn-dark'>
-                                                <img src="img\iconfinder_trashcan-delete_60097.png" alt="">
+            <div class='row'>
+                <div class='col-7'>
+                    <table class="table table-striped">
+                        <thead class='thead-dark'>
+                            <tr>
+                                <th scope="col">First name</th>
+                                <th scope="col">Patronymic name</th>
+                                <th scope="col">Last nane</th>
+                                <th scope="col">Birthday</th>
+                                <th scope="col">Books</th>
+                                <th scope="col">Delete</th>
+                                <th scope="col">Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody id='authorsTable'>
+                            <!-- Modal -->
+                            <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit author data:</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
                                             </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Gtrex</th>
-                                        <td></td>
-                                        <td>Mark</td>
-                                        <td>13.03.1980</td>
-                                        <td>
-                                            <ol>
-                                                <li>Lorem ipsum dolor sit amet.</li>
-                                                <li>Lorem ipsum dolor sit amet.</li>
-                                            </ol>
-                                        </td>
-                                        <td>
-                                                <button type="button" class='btn btn-dark'>
-                                                    <img src="img\iconfinder_trashcan-delete_60097.png" alt="">
-                                                </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Gtrex</th>
-                                        <td></td>
-                                        <td>Mark</td>
-                                        <td>13.03.1980</td>
-                                        <td>
-                                            <ol>
-                                                <li>Lorem ipsum dolor sit amet.</li>
-                                                <li>Lorem ipsum dolor sit amet.</li>
-                                            </ol>
-                                        </td>
-                                        <td>
-                                                <button type="button" class='btn btn-dark'>
-                                                    <img src="img\iconfinder_trashcan-delete_60097.png" alt="">
-                                                </button>
-                                        </td>
-                                    </tr> -->
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class='col-5'>
-                            <form class="needs-validation" actio='#' method="POST" novalidate>
-                                <div class="form-row">
-                                    <div class="col-md-4 mb-3">
-                                        <label for="firstName">First name</label>
-                                        <input type="text" class="form-control" id="firstName" placeholder="First name" required>
-                                        <div class="valid-feedback">
-                                            Looks good!
                                         </div>
-                                        
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                            <label for="patronymicName">Patronymic name</label>
-                                            <input type="text" class="form-control" id="patronymicName" placeholder="Patronymic name">
-                                            
+                                        <div class="modal-body">
+                                                <form class="needs-validation" actio='#' method="POST" novalidate>
+                                                        <div class="form-row">
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="firstNameModal">First name</label>
+                                                                <input type="text" class="form-control" id="firstNameModal" placeholder="First name"
+                                                                    required>
+                                                                <div class="valid-feedback">
+                                                                    Looks good!
+                                                                </div>
+                                
+                                                            </div>
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="patronymicNameModal">Patronymic name</label>
+                                                                <input type="text" class="form-control" id="patronymicNameModal"
+                                                                    placeholder="Patronymic name">
+                                
+                                                            </div>
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="lastNameModal">Last name</label>
+                                                                <input type="text" class="form-control" id="lastNameModal" placeholder="Last name" required>
+                                                                <div class="valid-feedback">
+                                                                    Looks good!
+                                                                </div>
+                                                            </div>
+                                
+                                                        </div>
+                                                        <div class="col-md-5 mb-3">
+                                                            <label for="birthdayModal">Birthday</label>
+                                                            <input type="date" class="form-control" id="birthdayModal" required>
+                                                            <div class="invalid-feedback">
+                                                                Please provide a valid date.
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-row">
+                                                            <div class="col-md-7 mb-3">
+                                                                <label for="booksFieldModal">Books</label>
+                                                                <textarea class="form-control" id="booksFieldModal"
+                                                                    placeholder="JavaScript Patterns, Python Cookbook, T-SQL Fundamentals"></textarea>
+                                                                <small class="form-text text-muted">Input books name inline with comma separated</small>
+                                                            </div>
+                                                        </div>
+                                                </form>                                
                                         </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label for="lastName">Last name</label>
-                                        <input type="text" class="form-control" id="lastName" placeholder="Last name" required>
-                                        <div class="valid-feedback">
-                                            Looks good!
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal" id='btnSaveModal'>Save changes</button>
                                         </div>
                                     </div>
-                                       
                                 </div>
-                                <div class="col-md-4 mb-3">
-                                        <label for="birthday">Birthday</label>
-                                        <input type="date" class="form-control" id="birthday" required>
-                                        <div class="invalid-feedback">
-                                            Please provide a valid date.
-                                        </div>
+                            </div>
+                        </tbody>
+                    </table>
+                </div>
+                <div class='col-5'>
+                    <form class="needs-validation" actio='#' method="POST" novalidate>
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <label for="firstName">First name</label>
+                                <input type="text" class="form-control" id="firstName" placeholder="First name"
+                                    required>
+                                <div class="valid-feedback">
+                                    Looks good!
                                 </div>
-                                <div class="form-row">
-                                    <div class="col-md-7 mb-3">
-                                            <label for="booksField">Books</label>
-                                            <textarea  class="form-control" id="booksField" placeholder="JavaScript Patterns, Python Cookbook, T-SQL Fundamentals"></textarea>
-                                            <small class="form-text text-muted">Input books name inline with comma separated</small>
-                                    </div>
+
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="patronymicName">Patronymic name</label>
+                                <input type="text" class="form-control" id="patronymicName"
+                                    placeholder="Patronymic name">
+
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="lastName">Last name</label>
+                                <input type="text" class="form-control" id="lastName" placeholder="Last name" required>
+                                <div class="valid-feedback">
+                                    Looks good!
                                 </div>
-            
-                    
-                                <button id='addAuthor' class="btn btn-dark" type="button">Add author</button>
-                            </form>
+                            </div>
+
                         </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="birthday">Birthday</label>
+                            <input type="date" class="form-control" id="birthday" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid date.
+                            </div>
                         </div>
+                        <div class="form-row">
+                            <div class="col-md-7 mb-3">
+                                <label for="booksField">Books</label>
+                                <textarea class="form-control" id="booksField"
+                                    placeholder="JavaScript Patterns, Python Cookbook, T-SQL Fundamentals"></textarea>
+                                <small class="form-text text-muted">Input books name inline with comma separated</small>
+                            </div>
+                        </div>
+
+
+                        <button id='addAuthor' class="btn btn-dark" type="button">Add author</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <script src='main.js'></script>
