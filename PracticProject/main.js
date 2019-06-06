@@ -133,22 +133,41 @@ function saveChanches(){
     booksTDs = document.querySelectorAll('td[data-col="books"]');
  
 }
-    // Sorting by First Name column
+// Sorting by First name column
 document.getElementById('thFistsName').addEventListener('click', sortByFirstName, false);
 function sortByFirstName(){
-    firstNamesArr = [];
-    for (let i=0; i<firstNameTDs.length; i++){
-        firstNamesArr.push(firstNameTDs[i].innerHTML);
+    sortingByCol(firstNameTDs);
+
+}
+// Sorting by Last name column
+document.getElementById('thLastName').addEventListener('click', sortByLastName, false);
+function sortByLastName(){
+    sortingByCol(lastNameTDs);
+}
+// Sorting by Patronymic name column
+document.getElementById('thPatronymicName').addEventListener('click', sortByPatronymicName, false);
+function sortByPatronymicName(){
+    sortingByCol(patrNameTDs);
+}
+// Sorting by Birthday column
+document.getElementById('thBirthday').addEventListener('click', sortByBirthdayName, false);
+function sortByBirthdayName(){
+    sortingByCol(birthdayTDs);
+}
+
+function sortingByCol(colHead){
+    sortColArr = [];
+    for (let i=0; i<colHead.length; i++){
+        sortColArr.push(colHead[i].innerHTML);
     }
-    firstNamesArr.sort();
-    console.log(booksTDs);
-    console.log(firstNamesArr);
+    sortColArr.sort();
+    console.log(sortColArr);
     var sortedTableArr=[];   
-    for (let j=0; j<firstNamesArr.length; j++){
+    for (let j=0; j<sortColArr.length; j++){
         var sortedTableTR={};
-        for (let i=0; i<firstNameTDs.length; i++){
-            if (firstNameTDs[i].innerHTML==firstNamesArr[j]){
-                var currID=firstNameTDs[i].getAttribute('data-id');
+        for (let i=0; i<colHead.length; i++){
+            if (colHead[i].innerHTML==sortColArr[j]){
+                var currID=colHead[i].getAttribute('data-id');
                 var currItemJSON = window.localStorage.getItem(currID);
                 var currItemObject = JSON.parse(currItemJSON);
                 sortedTableTR.id=currID;
@@ -168,65 +187,7 @@ function sortByFirstName(){
     for (let i=0; i<sortedTableArr.length; i++){
         addRow('authorsTable', sortedTableArr[i].id, sortedTableArr[i].firstName, sortedTableArr[i].patronymicName, sortedTableArr[i].lastName, sortedTableArr[i].birthday, sortedTableArr[i].books);
     }
-    console.log(sortedTableArr);
-
 }
-    
-
-    //.appendChild(document.createTextNode(editAuthorData['firstName']));
-
-
-// function createEditModal(){
-//     var editModal = document.createElement('div');
-//     editModal.classList.add('modal', 'fade');
-//     editModal.setAttribute('id', 'editModal');
-//     var td7 = document.getElementById('td7'); 
-//     td7.appendChild(editModal);
-
-//     var editModalDialog = document.createElement('div');
-//     editModalDialog.classList.add('modal-dialog');
-//     editModal.appendChild(editModalDialog);
- 
-//     var editModalContent = document.createElement('div');
-//     editModalContent.classList.add('modal-content');
-//     editModalDialog.appendChild(editModalContent);
-
-//     var editModalHeader = document.createElement('div');
-//     editModalHeader.classList.add('modal-header');
-//     editModalContent.appendChild(editModalHeader);
-
-//     var modalHeader = document.createElement('h5');
-//     modalHeader.innerText='Edit data of author';
-//     editModalHeader.appendChild(modalHeader);
-
-//     var btnCloseHeader = document.createElement('button');
-//     btnCloseHeader.classList.add('close');
-//     btnCloseHeader.setAttribute('data-dismiss', 'modal'); 
-//     btnCloseHeader.innerHTML='&times';
-//     editModalHeader.appendChild(btnCloseHeader);
- 
-//     var editModalBody = document.createElement('div');
-//     editModalBody.classList.add('modal-body');
-//     editModalContent.appendChild(editModalBody);
-
-//     var editModalFooter = document.createElement('div');
-//     editModalFooter.classList.add('modal-footer');
-//     editModalContent.appendChild(editModalFooter);
-
-//     var btnClose = document.createElement('button');
-//     btnClose.classList.add('btn', 'btn-secondary');
-//     btnClose.setAttribute('data-dismiss', 'modal'); 
-//     btnClose.innerText='Close';
-//     editModalFooter.appendChild(btnClose);
-
-//     var btnSave = document.createElement('button');
-//     btnSave.classList.add('btn', 'btn-primary');
-//     btnSave.setAttribute('data-dismiss', 'modal'); 
-//     btnSave.innerText='Save changes';
-//     editModalFooter.appendChild(btnSave);
-    
-//     //td7.appendChild(editModal);
-// }
 
 document.getElementById('addAuthor').addEventListener('click', addAuthor, false);
 
@@ -317,22 +278,41 @@ function addAuthor(){
     booksTDs = document.querySelectorAll('td[data-col="books"]');
 }
 
+// Validation form
+namePattern = /[a-z]/; 
+space = /\s/;
+firstName.addEventListener('change', nameCheck, false);
+patronymicName.addEventListener('change', nameCheck, false);
+lastName.addEventListener('change', nameCheck, false);
+// birthday.addEventListener('click', notEmptyCheck, false);
+// firstName.addEventListener('click', notEmptyCheck, false);
+// lastName.addEventListener('click', notEmptyCheck, false);
+document.getElementById('addAuthor').addEventListener('click', notEmptyCheck, false);
 
+function nameCheck(){
+    if (!namePattern.test(this.value.toLowerCase())&&(!this.value=="")) {
+        this.classList.remove('valid');
+        this.classList.add('noValid');
+        console.log(this);
+    }
+    else if (this.value==""){
+        this.classList.remove('valid');
+        this.classList.remove('noValid');
+    }
+    else{
+        this.classList.remove('noValid');
+        this.classList.add('valid');
+    } 
+    console.log(this);
+}
 
-(function() {
-    'use strict';
-    window.addEventListener('load', function() {
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation');
-      // Loop over them and prevent submission
-      var validation = Array.prototype.filter.call(forms, function(form) {
-        form.addEventListener('submit', function(event) {
-          if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      });
-    }, false);
-  })();
+ function notEmptyCheck(e){
+    if ((firstName.value=="")||(lastName.value=="")||(birthday.value=="")){
+        e.preventDefault();
+        alert('Please fill required filds!');
+    }
+    else{
+        this.classList.remove('noValid');
+        this.classList.add('valid');
+    } 
+}

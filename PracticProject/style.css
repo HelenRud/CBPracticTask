@@ -5,9 +5,18 @@
 }
 
 .table .thead-dark th:nth-child(-n+4):hover{
+    text-decoration: underline;
     color: white;
     text-shadow: 0 0 1px gainsboro, 0 0 1px gainsboro;
     cursor: pointer;
-
 }
+.noValid{
+
+    border: 2px solid red;
+    background-color: rgb(247, 201, 222);
+}
+.valid{
+    border: 2px solid green;
+}
+
 

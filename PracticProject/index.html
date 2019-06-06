@@ -133,31 +133,24 @@
                     </table>
                 </div>
                 <div class='col-5'>
-                    <form class="needs-validation" actio='#' method="POST" novalidate>
+                    <form actio='#' novalidate>
                         <div class="form-row">
                             <div class="col-md-4 mb-3">
                                 <label for="firstName">First name</label>
                                 <input type="text" class="form-control" id="firstName" placeholder="First name"
-                                    required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-
+                                required>
+                                
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="patronymicName">Patronymic name</label>
                                 <input type="text" class="form-control" id="patronymicName"
                                     placeholder="Patronymic name">
-
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="lastName">Last name</label>
-                                <input type="text" class="form-control" id="lastName" placeholder="Last name" required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
+                                <input type="text" class="form-control" id="lastName" placeholder="Last name" required>                     
                             </div>
-
+                            <small class="form-text text-muted">Use only letter symbols to fill name fields: A-z</small>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="birthday">Birthday</label>
@@ -171,11 +164,9 @@
                                 <label for="booksField">Books</label>
                                 <textarea class="form-control" id="booksField"
                                     placeholder="JavaScript Patterns, Python Cookbook, T-SQL Fundamentals"></textarea>
-                                <small class="form-text text-muted">Input books name inline with comma separated</small>
+                                <small class="form-text text-muted">Input books name inline with comma separated: ", "</small>
                             </div>
                         </div>
-
-
                         <button id='addAuthor' class="btn btn-dark" type="button">Add author</button>
                     </form>
                 </div>
