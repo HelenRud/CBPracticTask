@@ -143,32 +143,33 @@ function sortByFirstName(){
     firstNamesArr.sort();
     console.log(booksTDs);
     console.log(firstNamesArr);
-    for (let j=0; j<firstNamesArr.length; j++){       
-    for (let i=0; i<firstNameTDs.length; i++){
-        if (firstNameTDs[i].innerHTML==firstNamesArr[j]){
-           var currID=firstNameTDs[i].getAttribute('data-id');
-           var currItemJSON = window.localStorage.getItem(currID);
-           var currItemObject = JSON.parse(currItemJSON);
-           firstNameTDs[j].innerHTML=currItemObject['firstName'];
-           firstNameTDs[j].setAttribute('data-id', currID);
-           patrNameTDs[j].innerHTML=currItemObject['patronymicName'];
-           lastNameTDs[j].innerHTML=currItemObject['LastName'];
-           birthday[j].innerHTML=currItemObject['birthday'];
+    var sortedTableArr=[];   
+    for (let j=0; j<firstNamesArr.length; j++){
+        var sortedTableTR={};
+        for (let i=0; i<firstNameTDs.length; i++){
+            if (firstNameTDs[i].innerHTML==firstNamesArr[j]){
+                var currID=firstNameTDs[i].getAttribute('data-id');
+                var currItemJSON = window.localStorage.getItem(currID);
+                var currItemObject = JSON.parse(currItemJSON);
+                sortedTableTR.id=currID;
+                sortedTableTR.firstName=currItemObject['firstName'];
+                sortedTableTR.patronymicName=currItemObject['patronymicName'];
+                sortedTableTR.lastName=currItemObject['lastName'];
+                sortedTableTR.birthday=currItemObject['birthday'];
+                sortedTableTR.books=currItemObject['books'];
+            }
         }
-        //    for (let k=0; k<patrNameTDs.length; k++){
-        //         if (patrNameTDs[k].getAttribute('data-id')==firstNameTDs[i].getAttribute('data-id')){
-        //             patrNameTDs[j].innerHTML=
-        //         }   
-        // }
-        }
+        sortedTableArr[j]=sortedTableTR;
+     }
+     while (document.getElementById('authorsTable').firstChild){
+        document.getElementById('authorsTable').removeChild(document.getElementById('authorsTable').firstChild);
+     }
+   
+    for (let i=0; i<sortedTableArr.length; i++){
+        addRow('authorsTable', sortedTableArr[i].id, sortedTableArr[i].firstName, sortedTableArr[i].patronymicName, sortedTableArr[i].lastName, sortedTableArr[i].birthday, sortedTableArr[i].books);
     }
-    
-        
-        
-        // for (let j=0; j<patrNameTDs.length; j++){
-        //     if (patrNameTDs[j].getAttribute('data-id')==firstNameTDs[i].getAttribute('data-id'))
-        //         patrNameTDs[i].innerHTML=patrNameTDs[j].innerHTML;
-        // }
+    console.log(sortedTableArr);
+
 }
     
 
