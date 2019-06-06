@@ -11,6 +11,12 @@ let patronymicNameModal = document.getElementById('patronymicNameModal');
 let lastNameModal = document.getElementById('lastNameModal');
 let birthdayModal = document.getElementById('birthdayModal');
 let booksFieldModal = document.getElementById('booksFieldModal');
+let firstNamesArr = [];
+let firstNameTDs;
+let patrNameTDs;
+let lastNameTDs;
+let birthdayTDs;
+let booksTDs;
 let authorID;
 let allDataArr = [];
 let allAuthorsID = [];
@@ -30,7 +36,6 @@ function allAuthors(){
 
 function fillTable(){
     allAuthors();
-
     for (let i=0; i< allAuthorsID.length; i++){
         exDataJSON = window.localStorage.getItem(allAuthorsID[i]);
         exDataObject = JSON.parse(exDataJSON);
@@ -41,11 +46,23 @@ function fillTable(){
     for (let i=0; i<delBtnArr.length; i++){
     delBtnArr[i].addEventListener('click', delItem, false);
     }
+    firstNameTDs = document.querySelectorAll('td[data-col="firstName"]');
+    patrNameTDs = document.querySelectorAll('td[data-col="patrName"]');
+    lastNameTDs = document.querySelectorAll('td[data-col="lastName"]');
+    birthdayTDs = document.querySelectorAll('td[data-col="birthday"]');
+    booksTDs = document.querySelectorAll('td[data-col="books"]');
+ 
 }
 
 function delItem(){
     this.parentElement.parentElement.parentElement.removeChild(this.parentElement.parentElement);
     localStorage.removeItem(this.getAttribute('data-id'));
+    firstNameTDs = document.querySelectorAll('td[data-col="firstName"]');
+    patrNameTDs = document.querySelectorAll('td[data-col="patrName"]');
+    lastNameTDs = document.querySelectorAll('td[data-col="lastName"]');
+    birthdayTDs = document.querySelectorAll('td[data-col="birthday"]');
+    booksTDs = document.querySelectorAll('td[data-col="books"]');
+
 }
 
 function editItem(){
@@ -73,25 +90,22 @@ function saveChanches(){
     localStorage.setItem(this.getAttribute('data-id'), JSON.stringify(editAuthor));
     var editAuthorToTable = window.localStorage.getItem(this.getAttribute('data-id'));
     var editAuthorData = JSON.parse(editAuthorToTable);
-    var firstNameTDs = document.querySelectorAll('td[data-col="firstName"]');
+    
     for (let i=0; i<firstNameTDs.length; i++){
         if (firstNameTDs[i].getAttribute('data-id') == this.getAttribute('data-id')){
             firstNameTDs[i].innerHTML = editAuthorData['firstName'];
         }
     }
-    var patrNameTDs = document.querySelectorAll('td[data-col="patrName"]');
     for (let i=0; i<patrNameTDs.length; i++){
         if (patrNameTDs[i].getAttribute('data-id') == this.getAttribute('data-id')){
             patrNameTDs[i].innerHTML = editAuthorData['patronymicName'];
         }
     }
-    var lastNameTDs = document.querySelectorAll('td[data-col="lastName"]');
     for (let i=0; i<lastNameTDs.length; i++){
         if (lastNameTDs[i].getAttribute('data-id') == this.getAttribute('data-id')){
             lastNameTDs[i].innerHTML = editAuthorData['lastName'];
         }
     }
-    var birthdayTDs = document.querySelectorAll('td[data-col="birthday"]');
     for (let i=0; i<birthdayTDs.length; i++){
         if (birthdayTDs[i].getAttribute('data-id') == this.getAttribute('data-id')){
             birthdayTDs[i].innerHTML = editAuthorData['birthday'];
@@ -112,10 +126,54 @@ function saveChanches(){
             booksTDs[i].appendChild(editUL);
         }
     }
+    firstNameTDs = document.querySelectorAll('td[data-col="firstName"]');
+    patrNameTDs = document.querySelectorAll('td[data-col="patrName"]');
+    lastNameTDs = document.querySelectorAll('td[data-col="lastName"]');
+    birthdayTDs = document.querySelectorAll('td[data-col="birthday"]');
+    booksTDs = document.querySelectorAll('td[data-col="books"]');
+ 
+}
+    // Sorting by First Name column
+document.getElementById('thFistsName').addEventListener('click', sortByFirstName, false);
+function sortByFirstName(){
+    firstNamesArr = [];
+    for (let i=0; i<firstNameTDs.length; i++){
+        firstNamesArr.push(firstNameTDs[i].innerHTML);
+    }
+    firstNamesArr.sort();
+    console.log(booksTDs);
+    console.log(firstNamesArr);
+    for (let j=0; j<firstNamesArr.length; j++){       
+    for (let i=0; i<firstNameTDs.length; i++){
+        if (firstNameTDs[i].innerHTML==firstNamesArr[j]){
+           var currID=firstNameTDs[i].getAttribute('data-id');
+           var currItemJSON = window.localStorage.getItem(currID);
+           var currItemObject = JSON.parse(currItemJSON);
+           firstNameTDs[j].innerHTML=currItemObject['firstName'];
+           firstNameTDs[j].setAttribute('data-id', currID);
+           patrNameTDs[j].innerHTML=currItemObject['patronymicName'];
+           lastNameTDs[j].innerHTML=currItemObject['LastName'];
+           birthday[j].innerHTML=currItemObject['birthday'];
+        }
+        //    for (let k=0; k<patrNameTDs.length; k++){
+        //         if (patrNameTDs[k].getAttribute('data-id')==firstNameTDs[i].getAttribute('data-id')){
+        //             patrNameTDs[j].innerHTML=
+        //         }   
+        // }
+        }
+    }
+    
+        
+        
+        // for (let j=0; j<patrNameTDs.length; j++){
+        //     if (patrNameTDs[j].getAttribute('data-id')==firstNameTDs[i].getAttribute('data-id'))
+        //         patrNameTDs[i].innerHTML=patrNameTDs[j].innerHTML;
+        // }
+}
     
 
     //.appendChild(document.createTextNode(editAuthorData['firstName']));
-}
+
 
 // function createEditModal(){
 //     var editModal = document.createElement('div');
@@ -251,6 +309,11 @@ function addAuthor(){
     var newAuthorToTable = window.localStorage.getItem(authorID);
     var newAuthorData = JSON.parse(newAuthorToTable); 
     addRow('authorsTable', authorID, newAuthorData['firstName'], newAuthorData['patronymicName'], newAuthorData['lastName'], newAuthorData['birthday'], newAuthorData['books']);
+    firstNameTDs = document.querySelectorAll('td[data-col="firstName"]');
+    patrNameTDs = document.querySelectorAll('td[data-col="patrName"]');
+    lastNameTDs = document.querySelectorAll('td[data-col="lastName"]');
+    birthdayTDs = document.querySelectorAll('td[data-col="birthday"]');
+    booksTDs = document.querySelectorAll('td[data-col="books"]');
 }
 
 

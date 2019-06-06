@@ -1,0 +1,13 @@
+.table .thead-dark th{ 
+    color: gainsboro;
+    font-size: 1.2em;
+    transition: all .3s;
+}
+
+.table .thead-dark th:nth-child(-n+4):hover{
+    color: white;
+    text-shadow: 0 0 1px gainsboro, 0 0 1px gainsboro;
+    cursor: pointer;
+
+}
+
