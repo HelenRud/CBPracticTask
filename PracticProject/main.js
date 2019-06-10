@@ -6,6 +6,7 @@ let birthday = document.getElementById('birthday');
 let books = document.getElementById('books');
 let booksField= document.getElementById('booksField');
 let btnSaveModal = document.getElementById('btnSaveModal');
+let btnAddAuthor = document.getElementById('addAuthor');
 let firstNameModal = document.getElementById('firstNameModal');
 let patronymicNameModal = document.getElementById('patronymicNameModal');
 let lastNameModal = document.getElementById('lastNameModal');
@@ -66,7 +67,7 @@ function delItem(){
 }
 
 function editItem(){
-    console.log(this.getAttribute('data-id'));
+    btnSaveModal.setAttribute('disabled', true);
     btnSaveModal.setAttribute('data-id', this.getAttribute('data-id'))
     var editItemJSON = window.localStorage.getItem(this.getAttribute('data-id'));
     var editItemOdject = JSON.parse(editItemJSON);
@@ -75,11 +76,16 @@ function editItem(){
     lastNameModal.value= editItemOdject['lastName'];
     birthdayModal.value= editItemOdject['birthday'];
     booksFieldModal.value= editItemOdject['books'];
+    firstNameModal.classList.add('valid');
+    if (patronymicNameModal.value=='')
+        patronymicNameModal.classList.remove('valid');
+    else patronymicNameModal.classList.add('valid');
+    lastNameModal.classList.add('valid');
+    birthdayModal.classList.add('valid');
 }
 btnSaveModal.addEventListener('click', saveChanches, false);
 
 function saveChanches(){
-    console.log(this.getAttribute('data-id'));
     var editAuthor ={
         firstName: firstNameModal.value,
         patronymicName: patronymicNameModal.value,
@@ -189,7 +195,7 @@ function sortingByCol(colHead){
     }
 }
 
-document.getElementById('addAuthor').addEventListener('click', addAuthor, false);
+btnAddAuthor.addEventListener('click', addAuthor, false);
 
 function addRow(id, key, td1Text, td2Text, td3Text, td4Text, td5Text){
     booksArr=td5Text.split(', ');
@@ -276,24 +282,34 @@ function addAuthor(){
     lastNameTDs = document.querySelectorAll('td[data-col="lastName"]');
     birthdayTDs = document.querySelectorAll('td[data-col="birthday"]');
     booksTDs = document.querySelectorAll('td[data-col="books"]');
+
+    document.getElementById('addForm').reset();
+    btnAddAuthor.setAttribute('disabled', true);
+    [].forEach.call(document.querySelectorAll('.valid'), function (el) {
+        el.classList.remove('valid');
+    });
 }
 
-// Validation form
-namePattern = /[a-z]/; 
-space = /\s/;
+// Validation forms
+lastDate = new Date(2010, 1, 1);
+namePattern = /[a-z]/;
+btnAddAuthor.setAttribute('disabled', true); 
+btnSaveModal.setAttribute('disabled', true); 
 firstName.addEventListener('change', nameCheck, false);
 patronymicName.addEventListener('change', nameCheck, false);
 lastName.addEventListener('change', nameCheck, false);
-// birthday.addEventListener('click', notEmptyCheck, false);
-// firstName.addEventListener('click', notEmptyCheck, false);
-// lastName.addEventListener('click', notEmptyCheck, false);
-document.getElementById('addAuthor').addEventListener('click', notEmptyCheck, false);
+birthday.addEventListener('change', birthdayCheck, false);
 
-function nameCheck(){
+firstNameModal.addEventListener('change', nameCheck, false);
+patronymicNameModal.addEventListener('change', nameCheck, false);
+lastNameModal.addEventListener('change', nameCheck, false);
+birthdayModal.addEventListener('change', birthdayCheck, false);
+
+
+function nameCheck(e){
     if (!namePattern.test(this.value.toLowerCase())&&(!this.value=="")) {
         this.classList.remove('valid');
         this.classList.add('noValid');
-        console.log(this);
     }
     else if (this.value==""){
         this.classList.remove('valid');
@@ -303,16 +319,33 @@ function nameCheck(){
         this.classList.remove('noValid');
         this.classList.add('valid');
     } 
-    console.log(this);
+    activeBtn(e);    
 }
-
- function notEmptyCheck(e){
-    if ((firstName.value=="")||(lastName.value=="")||(birthday.value=="")){
-        e.preventDefault();
-        alert('Please fill required filds!');
+function birthdayCheck(e){
+    let birthdayDate=new Date (this.value);
+    if ((birthdayDate>lastDate)||!(birthdayDate.getMonth()+1)||!birthdayDate.getDate()||!birthdayDate.getFullYear()){
+        this.classList.remove('valid');
+        this.classList.add('noValid');
     }
     else{
         this.classList.remove('noValid');
         this.classList.add('valid');
-    } 
+    }
+    activeBtn(e);
+}
+
+function activeBtn(e){
+    console.log(e.target.form);
+    if (e.target.form.getAttribute('id')=='addForm')
+        if ((firstName.value)&&(lastName.value)&&(birthday.value)&&(firstName.classList.contains('valid'))&&(lastName.classList.contains('valid'))&&(birthday.classList.contains('valid'))&&((patronymicName.classList.contains('valid'))|| patronymicName.value=='')){
+            btnAddAuthor.removeAttribute('disabled');
+        }else{
+            btnAddAuthor.setAttribute('disabled', true);
+        }
+    if (e.target.form.getAttribute('id')=='editForm')
+        if ((firstNameModal.value)&&(lastNameModal.value)&&(birthdayModal.value)&&(firstNameModal.classList.contains('valid'))&&(lastNameModal.classList.contains('valid'))&&(birthdayModal.classList.contains('valid'))&&((patronymicNameModal.classList.contains('valid'))|| patronymicNameModal.value=='')){
+            btnSaveModal.removeAttribute('disabled');
+        }else{
+            btnSaveModal.setAttribute('disabled', true);
+        }
 }
