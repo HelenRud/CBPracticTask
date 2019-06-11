@@ -7,7 +7,9 @@ let pagesModal = document.getElementById('pagesNumberModal');
 let btnAddBook = document.getElementById('addBook');
 let btnSaveBookModal = document.getElementById('btnSaveBookModal');
 let ownGenreBlock = document.getElementById('ownGenreBlock');
+let ownGenreBlockModal = document.getElementById('ownGenreBlockModal');
 let ownGenre = document.getElementById('ownGenre');
+let ownGenreModal = document.getElementById('ownGenreModal');
 let allBooksID = [];
 
 window.addEventListener("load", fillTable, false);
@@ -41,23 +43,33 @@ function delItem(){
 }
 
 function editItem(){
+    ownGenreBlockModal.classList.add('hideBlock');    
     btnSaveBookModal.setAttribute('disabled', true);
-    btnSaveBookModal.setAttribute('data-id', this.getAttribute('data-id'))
+    btnSaveBookModal.setAttribute('data-id', this.getAttribute('data-id'));
     var editItemJSON = window.localStorage.getItem(this.getAttribute('data-id'));
     var editItemOdject = JSON.parse(editItemJSON);
+    if (genreModal.value == 'ownGenre'){
+        ownGenreBlockModal.classList.remove('hideBlock');
+        ownGenreModal.value= editItemOdject['genre'];
+        ownGenreModal.classList.add('valid');
+    } else{
+        genreModal.value= editItemOdject['genre'];
+        genreModal.classList.add('valid');
+    } 
     titleModal.value= editItemOdject['title'];
-    genreModal.value= editItemOdject['genre'];
     pagesModal.value= editItemOdject['pages'];
     titleModal.classList.add('valid');
-    genreModal.classList.add('valid');
     pagesModal.classList.add('valid');
 }
 btnSaveBookModal.addEventListener('click', saveBookChanches, false);
 
 function saveBookChanches(){
+    if (genreModal.value == 'ownGenre')
+        genreBook = ownGenreModal.value;
+    else genreBook = genreModal.value;
     var editBook ={
         title: titleModal.value,
-        genre: genreModal.value,
+        genre: genreBook,
         pages: pagesModal.value,
     }
     localStorage.setItem(this.getAttribute('data-id'), JSON.stringify(editBook));
@@ -135,9 +147,12 @@ function addBookRow(id, key, td1Text, td2Text, td3Text, td4Text, td5Text){
 btnAddBook.addEventListener('click', addBook, false);
 
 function addBook(){
+    if (genre.value == 'ownGenre')
+        genreBook = ownGenre.value;
+    else genreBook = genre.value;
         var newBook ={
             title: title.value,
-
+            genre: genreBook,
             pages: pages.value,
         }
     bookID=Math.round(0.5 + Math.random() * 1000);
@@ -150,11 +165,12 @@ function addBook(){
     genreTDs = document.querySelectorAll('td[data-col="genre"]');
     pagesTDs = document.querySelectorAll('td[data-col="pages"]');
 
-    // document.getElementById('addBook').reset();
-    // btnAddBook.setAttribute('disabled', true);
-    // [].forEach.call(document.querySelectorAll('.valid'), function (el) {
-    //     el.classList.remove('valid');
-    // });
+    document.getElementById('addBookForm').reset();
+    btnAddBook.setAttribute('disabled', true);
+    ownGenreBlock.classList.add('hideBlock');
+    [].forEach.call(document.querySelectorAll('.valid'), function (el) {
+        el.classList.remove('valid');
+    });
 }
 
 // Validation forms
@@ -170,6 +186,9 @@ pages.addEventListener('change', numberCheck, false);
 
 titleModal.addEventListener('change', textCheck, false);
 genreModal.addEventListener('change', textCheck, false);
+pagesModal.addEventListener('change', numberCheck, false);
+genreModal.addEventListener('change', genreCheck, false);
+ownGenreModal.addEventListener('change', textCheck, false);
 pagesModal.addEventListener('change', numberCheck, false);
 
 function numberCheck(e){
@@ -204,31 +223,54 @@ function textCheck(e){
     activeBtn(e);    
 }
 function genreCheck(e){
-    if (this.value == 'ownGenre'){
-        btnAddBook.setAttribute('disabled', true);
-        ownGenreBlock.classList.remove('hideBlock');
-        genre.classList.remove('valid');
-        genre.classList.remove('noValid');
-        ownGenre.addEventListener('change', textCheck);
+    if (e.target.form.getAttribute('id')=='editBookForm'){
+        if (this.value == 'ownGenre'){
+            btnSaveBookModal.setAttribute('disabled', true);
+            ownGenreBlockModal.classList.remove('hideBlock');
+            genreModal.classList.remove('valid');
+            genreModal.classList.remove('noValid');
+            ownGenreModal.addEventListener('change', textCheck);
+        }else 
+            if (this.value == 'Choose genre'){
+                ownGenreBlockModal.classList.add('hideBlock');
+                genreModal.classList.remove('valid');
+                genreModal.classList.remove('noValid');
+            }
+            else ownGenreBlockModal.classList.add('hideBlock');
     }
-    else{
-        ownGenreBlock.classList.add('hideBlock');
+    if (e.target.form.getAttribute('id')=='addBookForm'){
+        if (this.value == 'ownGenre'){
+            btnAddBook.setAttribute('disabled', true);
+            ownGenreBlock.classList.remove('hideBlock');
+            genre.classList.remove('valid');
+            genre.classList.remove('noValid');
+            ownGenre.addEventListener('change', textCheck);
+        }else 
+            if (this.value == 'Choose genre'){
+                ownGenreBlock.classList.add('hideBlock');
+                genre.classList.remove('valid');
+                genre.classList.remove('noValid');
+            }
+            else ownGenreBlock.classList.add('hideBlock');
     }
     activeBtn(e);
 }
 
 function activeBtn(e){
     if (e.target.form.getAttribute('id')=='addBookForm')
-        if ((title.value)&&(pages.value)&&(title.classList.contains('valid'))&&(pages.classList.contains('valid'))){
+        if (title.value && pages.value && title.classList.contains('valid') && pages.classList.contains('valid')){
             if ((genre.value == 'ownGenre' && ownGenre.classList.contains('valid')) || (genre.value != 'ownGenre' && genre.value != 'Choose genre')){
                 btnAddBook.removeAttribute('disabled');
             }
             else btnAddBook.setAttribute('disabled', true);
-        }else btnAddBook.setAttribute('disabled', true);
-        if (e.target.form.getAttribute('id')=='editBookForm')
-            if ((titleModal.value)&&(genreModal.value)&&(pagesModal.value)&&(titleModal.classList.contains('valid'))&&(genreModal.classList.contains('valid'))&&(pagesModal.classList.contains('valid'))){
+        }else 
+            btnAddBook.setAttribute('disabled', true);
+    if (e.target.form.getAttribute('id')=='editBookForm')
+        if (titleModal.value && pagesModal.value && titleModal.classList.contains('valid') && pagesModal.classList.contains('valid')){
+            if ((genreModal.value == 'ownGenre' && ownGenreModal.classList.contains('valid')) || (genreModal.value != 'ownGenre' && genreModal.value != 'Choose genre')){
                 btnSaveBookModal.removeAttribute('disabled');
-        }else{
-            btnSaveBookModal.setAttribute('disabled', true);
-        }
+            }
+            else btnSaveBookModal.setAttribute('disabled', true);
+        }else btnSaveBookModal.setAttribute('disabled', true);
+        
 }
