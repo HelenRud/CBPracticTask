@@ -10,6 +10,9 @@
     text-shadow: 0 0 1px gainsboro, 0 0 1px gainsboro;
     cursor: pointer;
 }
+#library > div > div.col-7 > table > thead > tr > th:nth-child(4){
+    pointer-events:none;   
+}
 .noValid{
 
     border: 2px solid red;

@@ -45,10 +45,117 @@
     <div class="tab-content" id="myTabContent">
         <!-- home-section content -->
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+       
         <!-- library-section content -->
         <div class="tab-pane fade" id="library" role="tabpanel" aria-labelledby="library-tab">
-
+                <div class='row'>
+                        <div class='col-7'>
+                            <table class="table table-striped">
+                                <thead class='thead-dark'>
+                                    <tr>
+                                        <th scope="col" id='thTitle'>Title</th>
+                                        <th scope="col" id='thGenre'>Genre</th>
+                                        <th scope="col" id='thPages'>Number of pages</th>
+                                        <th scope="col">Delete</th>
+                                        <th scope="col">Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='booksTable'>
+                                   <!-- Book modal -->
+                                    <div class="modal fade" id="editBookModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Edit book data:</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <small class="form-text text-muted ml-3">Please fill all required fields(<span style='color:red'>*</span>)</small>
+                                                <div class="modal-body">
+                                                        <form class="needs-validation" id='editBookForm' action='#' method="POST" novalidate>
+                                                                <div class="form-row">
+                                                                    <div class="col-md-4">
+                                                                        <label for="titleModal">Title<span style='color:red'>*</span></label>
+                                                                        <input type="text" class="form-control" id="titleModal" placeholder="Title"
+                                                                            required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-row">
+                                                                        <div class="col-md-6 mb-3">
+                                                                            <label for="genreModal">Genre<span style='color:red'>*</span></label>
+                                                                            <select id="genreModal" class="custom-select">
+                                                                                <option selected>Choose genre</option>
+                                                                                <option value="comedy">Comedy</option>
+                                                                                <option value="drama">Drama</option>
+                                                                                <option value="fantasy">Fantasy</option>
+                                                                                <option value="ownGenge">Input own genre</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-md-5 mb-3">
+                                                                            <label for=ownGenreModal">Input your genre</Input></label>
+                                                                            <input type="text" class="form-control" id='ownGenreModal' placeholder="Own genre">
+                                                                        </div>
+                                                                    </div>
+                                                                <div class="form-row">
+                                                                    <div class="col-md-4">
+                                                                        <label for="pagesNumberModal">Numbers of pages<span style='color:red'>*</span></label>
+                                                                        <input type="number" class="form-control" id="pagesNumberModal" placeholder="Number of pages" required>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                        </form>                                
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal" id='btnSaveBookModal'>Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class='col-5'>
+                            <form id='addBookForm' action='#' novalidate>
+                                    <small class="form-text text-muted ml-3 text-right m-3">Please fill all required fields(<span style='color:red'>*</span>)</small>
+                                <div class="form-row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="title">Title<span style='color:red'>*</span></label>
+                                        <input type="text" class="form-control" id="title" placeholder="Title"
+                                        required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="genre">Genre<span style='color:red'>*</span></label>
+                                        <select id="genre" class="custom-select">
+                                            <option selected>Choose genre</option>
+                                            <option value="comedy">Comedy</option>
+                                            <option value="drama">Drama</option>
+                                            <option value="fantasy">Fantasy</option>
+                                            <option value="ownGenge">Input own genre</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5 mb-3">
+                                        <label for=ownGenre">Input your genre</Input></label>
+                                        <input type="text" class="form-control" id='ownGenre' placeholder="Own genre">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="pagesNumber">Number of pages<span style='color:red'>*</span></label>
+                                        <input type="number" class="form-control" id="pagesNumber" placeholder="-" required>                     
+                                    </div>
+                                </div>
+                                <button id='addBook' class="btn btn-dark" type="button">Add book</button>
+                            </form>
+                        </div>
+                    </div>
         </div>
+        
         <!-- authors-section content -->
         <div class="tab-pane fade" id="authors" role="tabpanel" aria-labelledby="authors-tab">
             <div class='row'>
@@ -66,13 +173,13 @@
                             </tr>
                         </thead>
                         <tbody id='authorsTable'>
-                            <!-- Modal -->
+                            <!--Author modal -->
                             <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Edit author data:</h5>
+                                            <h5 class="modal-title">Edit author data:</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -80,7 +187,7 @@
                                         </div>
                                         <small class="form-text text-muted ml-3">Please fill all required fields(<span style='color:red'>*</span>)</small>
                                         <div class="modal-body">
-                                                <form class="needs-validation" id='editForm' actio='#' method="POST" novalidate>
+                                                <form class="needs-validation" id='editForm' action='#' method="POST" novalidate>
                                                         <div class="form-row">
                                                             <div class="col-md-4">
                                                                 <label for="firstNameModal">First name<span style='color:red'>*</span></label>
@@ -136,7 +243,7 @@
                     </table>
                 </div>
                 <div class='col-5'>
-                    <form id='addForm' actio='#' novalidate>
+                    <form id='addForm' action='#' novalidate>
                             <small class="form-text text-muted ml-3 text-right m-3">Please fill all required fields(<span style='color:red'>*</span>)</small>
                         <div class="form-row">
                             <div class="col-md-4">
@@ -157,7 +264,7 @@
                             <small class="form-text text-muted mb-3">Use only letter symbols to fill name fields: A-z</small>
                         </div>
                         <div class="form-row">
-                            <div class="col-md-5 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <label for="birthday">Birthday<span style='color:red'>*</span></label>
                                 <input type="date" class="form-control" id="birthday" required>
                                 <small class="form-text text-muted mb-3">Date should be before 01.01.2010</small>
@@ -177,7 +284,8 @@
             </div>
         </div>
     </div>
-    <script src='main.js'></script>
+    <!-- <script src='main.js'></script> -->
+    <script src="library.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
