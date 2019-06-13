@@ -21,6 +21,7 @@ let booksTDs;
 let authorID;
 let allDataArr = [];
 let allAuthorsID = [];
+let allAuthorsIDArr = [];
 let booksArr = [];
 let delBtnArr = [];
 let authorTable=document.getElementById('authorsTable');
@@ -30,17 +31,18 @@ window.addEventListener("load", fillTable, false);
 
 function allAuthors(){
     for (var i = 0; i < localStorage.length; i++) {
-        allAuthorsID[i] = localStorage.key(i);
+        if (localStorage.key(i).charAt(0) == 'a')
+            allAuthorsID[i] = localStorage.key(i);
      } 
-     return allAuthorsID;
+     return allAuthorsIDArr = allAuthorsID.filter(Boolean);
    }
 
 function fillTable(){
     allAuthors();
-    for (let i=0; i< allAuthorsID.length; i++){
-        exDataJSON = window.localStorage.getItem(allAuthorsID[i]);
+    for (let i=0; i< allAuthorsIDArr.length; i++){
+        exDataJSON = window.localStorage.getItem(allAuthorsIDArr[i]);
         exDataObject = JSON.parse(exDataJSON);
-        addRow('authorsTable', allAuthorsID[i], exDataObject['firstName'], exDataObject['patronymicName'], exDataObject['lastName'], exDataObject['birthday'], exDataObject['books']);
+        addRow('authorsTable', allAuthorsIDArr[i], exDataObject['firstName'], exDataObject['patronymicName'], exDataObject['lastName'], exDataObject['birthday'], exDataObject['books']);
     }
     // delBtnArr = document.querySelectorAll('.delBtn');
  
@@ -167,7 +169,6 @@ function sortingByCol(colHead){
         sortColArr.push(colHead[i].innerHTML);
     }
     sortColArr.sort();
-    console.log(sortColArr);
     var sortedTableArr=[];   
     for (let j=0; j<sortColArr.length; j++){
         var sortedTableTR={};
@@ -193,6 +194,11 @@ function sortingByCol(colHead){
     for (let i=0; i<sortedTableArr.length; i++){
         addRow('authorsTable', sortedTableArr[i].id, sortedTableArr[i].firstName, sortedTableArr[i].patronymicName, sortedTableArr[i].lastName, sortedTableArr[i].birthday, sortedTableArr[i].books);
     }
+    firstNameTDs = document.querySelectorAll('td[data-col="firstName"]');
+    patrNameTDs = document.querySelectorAll('td[data-col="patrName"]');
+    lastNameTDs = document.querySelectorAll('td[data-col="lastName"]');
+    birthdayTDs = document.querySelectorAll('td[data-col="birthday"]');
+    booksTDs = document.querySelectorAll('td[data-col="books"]');
 }
 
 btnAddAuthor.addEventListener('click', addAuthor, false);
@@ -271,7 +277,7 @@ function addAuthor(){
             birthday: birthday.value,
             books: booksField.value
         }
-        authorID=Math.round(0.5 + Math.random() * 1000);
+        authorID= 'a' + Math.round(0.5 + Math.random() * 1000);
         localStorage.setItem(authorID, JSON.stringify(newAuthor));    
    
     var newAuthorToTable = window.localStorage.getItem(authorID);
@@ -304,6 +310,7 @@ firstNameModal.addEventListener('change', nameCheck, false);
 patronymicNameModal.addEventListener('change', nameCheck, false);
 lastNameModal.addEventListener('change', nameCheck, false);
 birthdayModal.addEventListener('change', birthdayCheck, false);
+booksFieldModal.addEventListener('change', activeBtn, false);
 
 
 function nameCheck(e){

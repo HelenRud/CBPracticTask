@@ -11,22 +11,26 @@ let ownGenreBlockModal = document.getElementById('ownGenreBlockModal');
 let ownGenre = document.getElementById('ownGenre');
 let ownGenreModal = document.getElementById('ownGenreModal');
 let allBooksID = [];
+let allBooksIDArr = [];
+let genreArr = ['comedy', 'drama', 'fantasy'];
 
-window.addEventListener("load", fillTable, false);
+window.addEventListener("load", fillBookTable, false);
 
 function allBooks(){
     for (var i = 0; i < localStorage.length; i++) {
-        allBooksID[i] = localStorage.key(i);
+        if (localStorage.key(i).charAt(0) == 'b')
+            allBooksID[i] = localStorage.key(i);
      } 
-     return allBooksID;
+     return allBookIDArr = allBooksID.filter(Boolean);
    }
 
-function fillTable(){
+function fillBookTable(){
     allBooks();
-    for (let i=0; i< allBooksID.length; i++){
-        exDataJSON = window.localStorage.getItem(allBooksID[i]);
+    console.log(allBookIDArr);
+    for (let i=0; i< allBookIDArr.length; i++){
+        exDataJSON = window.localStorage.getItem(allBookIDArr[i]);
         exDataObject = JSON.parse(exDataJSON);
-        addBookRow('booksTable', allBooksID[i], exDataObject['title'], exDataObject['genre'], exDataObject['pages']);
+        addBookRow('booksTable', allBookIDArr[i], exDataObject['title'], exDataObject['genre'], exDataObject['pages']);
     }
     titleTDs = document.querySelectorAll('td[data-col="title"]');
     genreTDs = document.querySelectorAll('td[data-col="genre"]');
@@ -34,7 +38,7 @@ function fillTable(){
     ownGenreBlock.classList.add('hideBlock');
  }
 
-function delItem(){
+function delBookItem(){
     this.parentElement.parentElement.parentElement.removeChild(this.parentElement.parentElement);
     localStorage.removeItem(this.getAttribute('data-id'));
     titleTDs = document.querySelectorAll('td[data-col="title"]');
@@ -42,15 +46,18 @@ function delItem(){
     pagesTDs = document.querySelectorAll('td[data-col="pages"]');
 }
 
-function editItem(){
+function editBookItem(){
     ownGenreBlockModal.classList.add('hideBlock');    
     btnSaveBookModal.setAttribute('disabled', true);
     btnSaveBookModal.setAttribute('data-id', this.getAttribute('data-id'));
     var editItemJSON = window.localStorage.getItem(this.getAttribute('data-id'));
     var editItemOdject = JSON.parse(editItemJSON);
-    if (genreModal.value == 'ownGenre'){
+    if (!genreArr.includes(editItemOdject['genre'])) {
         ownGenreBlockModal.classList.remove('hideBlock');
         ownGenreModal.value= editItemOdject['genre'];
+        genreModal.classList.remove('valid');
+        genreModal.classList.remove('noValid');
+        genreModal.value = 'ownGenre';
         ownGenreModal.classList.add('valid');
     } else{
         genreModal.value= editItemOdject['genre'];
@@ -96,6 +103,62 @@ function saveBookChanches(){
     pagesTDs = document.querySelectorAll('td[data-col="pages"]');
 }
 
+// Sorting by title column
+document.getElementById('thTitle').addEventListener('click', sortByTitle, false);
+function sortByTitle(){
+    sortByColBook(titleTDs);
+
+}
+// Sorting by genre column
+document.getElementById('thGenre').addEventListener('click', sortByGenre, false);
+function sortByGenre(){
+    sortByColBook(genreTDs);
+}
+// Sorting by Number of pages column
+document.getElementById('thPages').addEventListener('click', sortByPages, false);
+function sortByPages(){
+    sortByColBook(pagesTDs);
+}
+
+function sortByColBook(colHead){
+    sortColArr = [];
+    for (let i=0; i<colHead.length; i++){
+        sortColArr.push(colHead[i].innerHTML);
+    }
+    if (colHead == pagesTDs){
+        sortColArr=sortColArr.sort((a,b) => a-b);
+    }
+    else
+        sortColArr.sort();
+    var sortedTableArr=[];   
+    for (let j=0; j<sortColArr.length; j++){
+        var sortedTableTR={};
+        for (let i=0; i<colHead.length; i++){
+            if (colHead[i].innerHTML==sortColArr[j]){
+                var currID=colHead[i].getAttribute('data-id');
+                var currItemJSON = window.localStorage.getItem(currID);
+                var currItemObject = JSON.parse(currItemJSON);
+                sortedTableTR.id=currID;
+                sortedTableTR.title=currItemObject['title'];
+                sortedTableTR.genre=currItemObject['genre'];
+                sortedTableTR.pages=currItemObject['pages'];
+            }
+        }
+        sortedTableArr[j]=sortedTableTR;
+     }
+     while (document.getElementById('booksTable').firstChild){
+        document.getElementById('booksTable').removeChild(document.getElementById('booksTable').firstChild);
+     }
+   
+    for (let i=0; i<sortedTableArr.length; i++){
+        addBookRow('booksTable', sortedTableArr[i].id, sortedTableArr[i].title, sortedTableArr[i].genre, sortedTableArr[i].pages);
+    }
+    titleTDs = document.querySelectorAll('td[data-col="title"]');
+    genreTDs = document.querySelectorAll('td[data-col="genre"]');
+    pagesTDs = document.querySelectorAll('td[data-col="pages"]');
+}
+
+
 function addBookRow(id, key, td1Text, td2Text, td3Text, td4Text, td5Text){
     var tbody = document.getElementById(id);
     var row = document.createElement("tr")
@@ -114,7 +177,7 @@ function addBookRow(id, key, td1Text, td2Text, td3Text, td4Text, td5Text){
     var td6 = document.createElement("td")
     
     var delBtn=document.createElement('button');
-    delBtn.addEventListener('click', delItem, false);
+    delBtn.addEventListener('click', delBookItem, false);
     delBtn.setAttribute('data-id', key);
     delBtn.classList.add('btn', 'btn-dark', 'delBtn');
     
@@ -125,7 +188,7 @@ function addBookRow(id, key, td1Text, td2Text, td3Text, td4Text, td5Text){
     td7.setAttribute('id', 'td7');
     
     var editBtn=document.createElement('button');
-    editBtn.addEventListener('click', editItem, false);
+    editBtn.addEventListener('click', editBookItem, false);
     editBtn.setAttribute('data-id', key);
     editBtn.setAttribute('data-toggle', 'modal');
     editBtn.setAttribute('data-target', '#editBookModal');
@@ -155,7 +218,7 @@ function addBook(){
             genre: genreBook,
             pages: pages.value,
         }
-    bookID=Math.round(0.5 + Math.random() * 1000);
+    bookID= 'b' + Math.round(0.5 + Math.random() * 1000);
     localStorage.setItem(bookID, JSON.stringify(newBook));    
     var newBookToTable = window.localStorage.getItem(bookID);
     var newBookData = JSON.parse(newBookToTable); 
@@ -204,7 +267,7 @@ function numberCheck(e){
         this.classList.remove('noValid');
         this.classList.add('valid');
     } 
-    activeBtn(e);    
+    activeBtnBook(e);    
 }
 
 function textCheck(e){
@@ -220,16 +283,18 @@ function textCheck(e){
         this.classList.remove('noValid');
         this.classList.add('valid');
     } 
-    activeBtn(e);    
+    activeBtnBook(e);    
 }
 function genreCheck(e){
     if (e.target.form.getAttribute('id')=='editBookForm'){
+        btnSaveBookModal.setAttribute('disabled', true);
         if (this.value == 'ownGenre'){
-            btnSaveBookModal.setAttribute('disabled', true);
             ownGenreBlockModal.classList.remove('hideBlock');
+            ownGenreModal.value =''; 
+            ownGenreModal.classList.remove('valid');
             genreModal.classList.remove('valid');
             genreModal.classList.remove('noValid');
-            ownGenreModal.addEventListener('change', textCheck);
+            ownGenreModal.addEventListener('change', textCheck, false);
         }else 
             if (this.value == 'Choose genre'){
                 ownGenreBlockModal.classList.add('hideBlock');
@@ -253,10 +318,10 @@ function genreCheck(e){
             }
             else ownGenreBlock.classList.add('hideBlock');
     }
-    activeBtn(e);
+    activeBtnBook(e);
 }
 
-function activeBtn(e){
+function activeBtnBook(e){
     if (e.target.form.getAttribute('id')=='addBookForm')
         if (title.value && pages.value && title.classList.contains('valid') && pages.classList.contains('valid')){
             if ((genre.value == 'ownGenre' && ownGenre.classList.contains('valid')) || (genre.value != 'ownGenre' && genre.value != 'Choose genre')){
