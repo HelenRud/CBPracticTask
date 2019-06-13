@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-        <title>Document</title>
+    <title>Document</title>
 </head>
 
 <body>
@@ -45,117 +45,165 @@
     <div class="tab-content" id="myTabContent">
         <!-- home-section content -->
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
-       
+
         <!-- library-section content -->
         <div class="tab-pane fade" id="library" role="tabpanel" aria-labelledby="library-tab">
-                <div class='row'>
-                        <div class='col-7'>
-                            <table class="table table-striped">
-                                <thead class='thead-dark'>
-                                    <tr>
-                                        <th scope="col" id='thTitle'>Title</th>
-                                        <th scope="col" id='thGenre'>Genre</th>
-                                        <th scope="col" id='thPages'>Number of pages</th>
-                                        <th scope="col">Delete</th>
-                                        <th scope="col">Edit</th>
-                                    </tr>
-                                </thead>
-                                <tbody id='booksTable'>
-                                   <!-- Book modal -->
-                                    <div class="modal fade" id="editBookModal" tabindex="-1" role="dialog"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Edit book data:</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
+            <div class='row'>
+                <div class='col-7'>
+                    <table class="table table-striped">
+                        <thead class='thead-dark'>
+                            <tr>
+                                <th scope="col" id='thTitle'>Title</th>
+                                <th scope="col" id='thGenre'>Genre</th>
+                                <th scope="col" id='thPages'>Number of pages</th>
+                                <th scope="col">Delete</th>
+                                <th scope="col">Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody id='booksTable'>
+                            <!-- Book modal -->
+                            <div class="modal fade" id="editBookModal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Edit book data:</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <small class="form-text text-muted ml-3">Please fill all required fields(<span
+                                                style='color:red'>*</span>)</small>
+                                        <div class="modal-body">
+                                            <form class="needs-validation" id='editBookForm' action='#' method="POST"
+                                                novalidate>
+                                                <div class="form-row">
+                                                    <div class="col-md-4">
+                                                        <label for="titleModal">Title<span
+                                                                style='color:red'>*</span></label>
+                                                        <input type="text" class="form-control" id="titleModal"
+                                                            placeholder="Title" required>
+                                                    </div>
                                                 </div>
-                                                <small class="form-text text-muted ml-3">Please fill all required fields(<span style='color:red'>*</span>)</small>
-                                                <div class="modal-body">
-                                                        <form class="needs-validation" id='editBookForm' action='#' method="POST" novalidate>
-                                                                <div class="form-row">
-                                                                    <div class="col-md-4">
-                                                                        <label for="titleModal">Title<span style='color:red'>*</span></label>
-                                                                        <input type="text" class="form-control" id="titleModal" placeholder="Title"
-                                                                            required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-row">
-                                                                        <div class="col-md-6 mb-3">
-                                                                            <label for="genreModal">Genre<span style='color:red'>*</span></label>
-                                                                            <select id="genreModal" class="custom-select">
-                                                                                <option selected>Choose genre</option>
-                                                                                <option value="comedy">comedy</option>
-                                                                                <option value="drama">drama</option>
-                                                                                <option value="fantasy">fantasy</option>
-                                                                                <option value="ownGenre">Input own genre</option>
-                                                                            </select>
-                                                                        </div>
-                                                                        <div class="col-md-5 mb-3" id='ownGenreBlockModal'>
-                                                                            <label for=ownGenreModal">Input your genre</Input></label>
-                                                                            <input type="text" class="form-control" id='ownGenreModal' placeholder="Own genre">
-                                                                        </div>
-                                                                    </div>
-                                                                <div class="form-row">
-                                                                    <div class="col-md-4">
-                                                                        <label for="pagesNumberModal">Numbers of pages<span style='color:red'>*</span></label>
-                                                                        <input type="number" class="form-control" id="pagesNumberModal" placeholder="Number of pages" required>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                        </form>                                
+                                                <div class="form-row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="genreModal">Genre<span
+                                                                style='color:red'>*</span></label>
+                                                        <select id="genreModal" class="custom-select">
+                                                            <option selected>Choose genre</option>
+                                                            <option value="comedy">comedy</option>
+                                                            <option value="drama">drama</option>
+                                                            <option value="fantasy">fantasy</option>
+                                                            <option value="ownGenre">Input own genre</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-5 mb-3" id='ownGenreBlockModal'>
+                                                        <label for=ownGenreModal">Input your genre</Input></label>
+                                                        <input type="text" class="form-control" id='ownGenreModal'
+                                                            placeholder="Own genre">
+                                                    </div>
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary" data-dismiss="modal" id='btnSaveBookModal'>Save changes</button>
+                                                <div class="form-row">
+                                                    <div class="col-md-4">
+                                                        <label for="pagesNumberModal">Numbers of pages<span
+                                                                style='color:red'>*</span></label>
+                                                        <input type="number" class="form-control" id="pagesNumberModal"
+                                                            placeholder="Number of pages" required>
+                                                    </div>
                                                 </div>
+
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                id='btnSaveBookModal'>Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tbody>
+                    </table>
+                </div>
+                <div class='col-5'>
+                    <form id='addBookForm' action='#' novalidate>
+                        <small class="form-text text-muted ml-3 m-3">Please fill all required fields(<span
+                                style='color:red'>*</span>)</small>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="title">Title<span style='color:red'>*</span></label>
+                                <input type="text" class="form-control" id="title" placeholder="Title" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="genre">Genre<span style='color:red'>*</span></label>
+                                <select id="genre" class="custom-select">
+                                    <option selected id='firstOptionGenre'>Choose genre</option>
+                                    <option value="ownGenre" id='lastOptionGenre'>Input own genre</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5 mb-3" id='ownGenreBlock'>
+                                <label for=ownGenre">Input your genre</Input></label>
+                                <input type="text" class="form-control" id='ownGenre' placeholder="Own genre">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                                <button id='editGenreBtn' class="btn btn-dark mb-3" type="button" data-toggle="modal"
+                                    data-target="#editGenreModal"> Edit Genre List</button>
+                                <!-- Modal Edit Genre List -->
+                                <div class="modal fade" id="editGenreModal" tabindex="-1" role="dialog"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Edit Genre List:</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <small class="form-text text-muted mb-3">You can remove any genre or add
+                                                    new by comma seperator: (", ")</small>
+                                                <textarea id="editGenreArea" cols="50" rows="5"></textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Close</button>
+                                                <button id='saveGenreModalBtn' type="button" class="btn btn-primary"
+                                                    data-dismiss="modal">Save changes</button>
                                             </div>
                                         </div>
                                     </div>
-                                </tbody>
-                            </table>
+                                </div>
+                            </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="pagesNumber">Number of pages<span style='color:red'>*</span></label>
+                                <input type="number" class="form-control" id="pagesNumber" placeholder="-" required>
+                            </div>
                         </div>
-                        <div class='col-5'>
-                            <form id='addBookForm' action='#' novalidate>
-                                    <small class="form-text text-muted ml-3 text-right m-3">Please fill all required fields(<span style='color:red'>*</span>)</small>
-                                <div class="form-row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="title">Title<span style='color:red'>*</span></label>
-                                        <input type="text" class="form-control" id="title" placeholder="Title"
-                                        required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="genre">Genre<span style='color:red'>*</span></label>
-                                        <select id="genre" class="custom-select">
-                                            <option selected>Choose genre</option>
-                                            <option value="comedy">comedy</option>
-                                            <option value="drama">drama</option>
-                                            <option value="fantasy">fantasy</option>
-                                            <option value="ownGenre">Input own genre</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-5 mb-3" id='ownGenreBlock'>
-                                        <label for=ownGenre">Input your genre</Input></label>
-                                        <input type="text" class="form-control" id='ownGenre' placeholder="Own genre">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="pagesNumber">Number of pages<span style='color:red'>*</span></label>
-                                        <input type="number" class="form-control" id="pagesNumber" placeholder="-" required>                     
-                                    </div>
-                                </div>
-                                <button id='addBook' class="btn btn-dark" type="button">Add book</button>
-                            </form>
+                        <button id='addBook' class="btn btn-dark" type="button">Add book</button>
+                    </form>
+                    <label class="mt-5" for="bookSearch">Enter title of book and press "Search" button to take result</label>
+                    <form class="form-row">
+                        <div class='col-md-8 mb-3'>
+                            <input id='bookSearch' class="form-control w-5" type="text">
                         </div>
+                        <div class='col-md-2 mb-3 align-text-bottom'>
+                            <button id='searchBtn' class="btn btn-dark" type="button">Search</button>
+                        </div>
+                    </form>
+                    <div id='findBlock' class="form-row">
+
                     </div>
+                </div>
+                
+            </div>
         </div>
-        
+
         <!-- authors-section content -->
         <div class="tab-pane fade" id="authors" role="tabpanel" aria-labelledby="authors-tab">
             <div class='row'>
@@ -183,58 +231,69 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
-                                            
-                                        </div>
-                                        <small class="form-text text-muted ml-3">Please fill all required fields(<span style='color:red'>*</span>)</small>
-                                        <div class="modal-body">
-                                                <form class="needs-validation" id='editForm' action='#' method="POST" novalidate>
-                                                        <div class="form-row">
-                                                            <div class="col-md-4">
-                                                                <label for="firstNameModal">First name<span style='color:red'>*</span></label>
-                                                                <input type="text" class="form-control" id="firstNameModal" placeholder="First name"
-                                                                    required>
-                                                                <div class="valid-feedback">
-                                                                    Looks good!
-                                                                </div>
-                                
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <label for="patronymicNameModal">Patronymic name</label>
-                                                                <input type="text" class="form-control" id="patronymicNameModal"
-                                                                    placeholder="Patronymic name">
-                                
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <label for="lastNameModal">Last name<span style='color:red'>*</span></label>
-                                                                <input type="text" class="form-control" id="lastNameModal" placeholder="Last name" required>
-                                                                <div class="valid-feedback">
-                                                                    Looks good!
-                                                                </div>
-                                                            </div>
-                                                            <small class="form-text text-muted mb-3">Use only letter symbols to fill name fields: A-z</small>
 
+                                        </div>
+                                        <small class="form-text text-muted ml-3">Please fill all required fields(<span
+                                                style='color:red'>*</span>)</small>
+                                        <div class="modal-body">
+                                            <form class="needs-validation" id='editForm' action='#' method="POST"
+                                                novalidate>
+                                                <div class="form-row">
+                                                    <div class="col-md-4">
+                                                        <label for="firstNameModal">First name<span
+                                                                style='color:red'>*</span></label>
+                                                        <input type="text" class="form-control" id="firstNameModal"
+                                                            placeholder="First name" required>
+                                                        <div class="valid-feedback">
+                                                            Looks good!
                                                         </div>
-                                                        <div class="form-row">
-                                                            <div class="col-md-6 mb-3">
-                                                                <label for="birthdayModal">Birthday<span style='color:red'>*</span></label>
-                                                                <input type="date" class="form-control" id="birthdayModal" required>
-                                                                <small class="form-text text-muted mb-3">Date should be before 01.01.2010</small>
-                                                            </div>
+
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="patronymicNameModal">Patronymic name</label>
+                                                        <input type="text" class="form-control" id="patronymicNameModal"
+                                                            placeholder="Patronymic name">
+
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="lastNameModal">Last name<span
+                                                                style='color:red'>*</span></label>
+                                                        <input type="text" class="form-control" id="lastNameModal"
+                                                            placeholder="Last name" required>
+                                                        <div class="valid-feedback">
+                                                            Looks good!
                                                         </div>
-                                                        <div class="form-row">
-                                                            <div class="col-md-8 mb-3">
-                                                                <label for="booksFieldModal">Books</label>
-                                                                <textarea class="form-control" id="booksFieldModal"
-                                                                    placeholder="JavaScript Patterns, Python Cookbook, T-SQL Fundamentals"></textarea>
-                                                                <small class="form-text text-muted">Input books name inline with comma separated: ", "</small>
-                                                            </div>
-                                                        </div>
-                                                </form>                                
+                                                    </div>
+                                                    <small class="form-text text-muted mb-3">Use only letter symbols to
+                                                        fill name fields: A-z</small>
+
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="birthdayModal">Birthday<span
+                                                                style='color:red'>*</span></label>
+                                                        <input type="date" class="form-control" id="birthdayModal"
+                                                            required>
+                                                        <small class="form-text text-muted mb-3">Date should be before
+                                                            01.01.2010</small>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="col-md-8 mb-3">
+                                                        <label for="booksFieldModal">Books</label>
+                                                        <textarea class="form-control" id="booksFieldModal"
+                                                            placeholder="JavaScript Patterns, Python Cookbook, T-SQL Fundamentals"></textarea>
+                                                        <small class="form-text text-muted">Input books name inline by
+                                                            comma separator: ", "</small>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal" id='btnSaveModal'>Save changes</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                id='btnSaveModal'>Save changes</button>
                                         </div>
                                     </div>
                                 </div>
@@ -244,13 +303,14 @@
                 </div>
                 <div class='col-5'>
                     <form id='addForm' action='#' novalidate>
-                            <small class="form-text text-muted ml-3 text-right m-3">Please fill all required fields(<span style='color:red'>*</span>)</small>
+                        <small class="form-text text-muted ml-3 text-right m-3">Please fill all required fields(<span
+                                style='color:red'>*</span>)</small>
                         <div class="form-row">
                             <div class="col-md-4">
                                 <label for="firstName">First name<span style='color:red'>*</span></label>
                                 <input type="text" class="form-control" id="firstName" placeholder="First name"
-                                required>
-                                
+                                    required>
+
                             </div>
                             <div class="col-md-4">
                                 <label for="patronymicName">Patronymic name</label>
@@ -259,9 +319,10 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="lastName">Last name<span style='color:red'>*</span></label>
-                                <input type="text" class="form-control" id="lastName" placeholder="Last name" required>                     
+                                <input type="text" class="form-control" id="lastName" placeholder="Last name" required>
                             </div>
-                            <small class="form-text text-muted mb-3">Use only letter symbols to fill name fields: A-z</small>
+                            <small class="form-text text-muted mb-3">Use only letter symbols to fill name fields:
+                                A-z</small>
                         </div>
                         <div class="form-row">
                             <div class="col-md-4 mb-3">
@@ -275,7 +336,8 @@
                                 <label for="booksField">Books</label>
                                 <textarea class="form-control" id="booksField"
                                     placeholder="JavaScript Patterns, Python Cookbook, T-SQL Fundamentals"></textarea>
-                                <small class="form-text text-muted">Input books name inline with comma separated: ", "</small>
+                                <small class="form-text text-muted">Input books name inline with comma separated: ",
+                                    "</small>
                             </div>
                         </div>
                         <button id='addAuthor' class="btn btn-dark" type="button">Add author</button>

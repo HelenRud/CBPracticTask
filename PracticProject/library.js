@@ -12,7 +12,15 @@ let ownGenre = document.getElementById('ownGenre');
 let ownGenreModal = document.getElementById('ownGenreModal');
 let allBooksID = [];
 let allBooksIDArr = [];
-let genreArr = ['comedy', 'drama', 'fantasy'];
+let editGenreBtn = document.getElementById('editGenreBtn');
+let genreArr = ['comedy', 'drama', 'fg', 'assd'];
+let newGenreArr = [];
+let editGenre = document.getElementById('editGenre');
+let editGenreArea = document.getElementById('editGenreArea');
+let saveGenreModalBtn = document.getElementById('saveGenreModalBtn');
+let lastOptionGenre = document.getElementById('lastOptionGenre');
+let firstOptionGenre = document.getElementById('firstOptionGenre');
+
 
 window.addEventListener("load", fillBookTable, false);
 
@@ -26,7 +34,6 @@ function allBooks(){
 
 function fillBookTable(){
     allBooks();
-    console.log(allBookIDArr);
     for (let i=0; i< allBookIDArr.length; i++){
         exDataJSON = window.localStorage.getItem(allBookIDArr[i]);
         exDataObject = JSON.parse(exDataJSON);
@@ -35,8 +42,45 @@ function fillBookTable(){
     titleTDs = document.querySelectorAll('td[data-col="title"]');
     genreTDs = document.querySelectorAll('td[data-col="genre"]');
     pagesTDs = document.querySelectorAll('td[data-col="pages"]');
-    ownGenreBlock.classList.add('hideBlock');
- }
+    ownGenreBlock.classList.add('hideBlock');   
+    
+    fillGenreSelect(genreArr);
+}
+
+editGenreBtn.addEventListener('click', fillGenreTextArea, false);
+function fillGenreTextArea(){
+    saveGenreModalBtn.setAttribute('disabled', true);
+    editGenreArea.innerHTML = '';
+    for (let i = 0; i<genreArr.length; i++){
+        editGenreArea.innerHTML += genreArr[i];
+        if ((i+1) != genreArr.length)
+            editGenreArea.innerHTML += ", ";
+    }
+}
+editGenreArea.addEventListener('change', function(){saveGenreModalBtn.removeAttribute('disabled');}, false);
+
+saveGenreModalBtn.addEventListener('click', saveGenreChanches, false);
+function saveGenreChanches(){
+    genreArr =  editGenreArea.value.split(', ');
+
+    fillGenreSelect(genreArr);    
+}
+
+
+function fillGenreSelect(genArr){
+    for (let i = 0; i<genre.childNodes.length; i++){
+        console.log(genre.childNodes[i]);
+    if ((genre.childNodes[i] !== firstOptionGenre) && (genre.childNodes[i] !== lastOptionGenre)){
+        genre.removeChild(genre.childNodes[i]);
+        i--;
+    }
+    }
+    for (let i = 0; i<genArr.length; i++){
+        let addGenre = document.createElement('option');
+        addGenre.innerHTML = genArr[i];
+        lastOptionGenre.insertAdjacentElement('beforebegin', addGenre);
+    }
+}
 
 function delBookItem(){
     this.parentElement.parentElement.parentElement.removeChild(this.parentElement.parentElement);
@@ -336,6 +380,53 @@ function activeBtnBook(e){
                 btnSaveBookModal.removeAttribute('disabled');
             }
             else btnSaveBookModal.setAttribute('disabled', true);
-        }else btnSaveBookModal.setAttribute('disabled', true);
-        
+        }else btnSaveBookModal.setAttribute('disabled', true);       
+}
+
+//--Search book
+
+let findBlock = document.getElementById('findBlock');
+let searchBtn=document.getElementById('searchBtn');
+let bookSearch=document.getElementById('bookSearch');
+searchBtn.addEventListener('click', startSearch, false);
+function startSearch(){
+    let find = false;
+    let searchTitle = bookSearch.value;
+    for (let i=0; i<titleTDs.length; i++){
+        if (searchTitle == titleTDs[i].innerHTML){
+            find = true;
+            let searchID = titleTDs[i].getAttribute('data-id');
+            getSearchJSON = window.localStorage.getItem(searchID);
+            serchObject = JSON.parse(getSearchJSON);
+            let title = document.createElement('label');
+            title.setAttribute('for', 'foundTitle');
+            title.innerHTML = 'Title: ';
+            findBlock.appendChild(title);
+            let titleInput = document.createElement('p');
+            title.setAttribute('id', 'foundTitle');
+            titleInput.innerHTML = serchObject['title'];
+            findBlock.appendChild(titleInput);
+
+            let genre = document.createElement('label');
+            genre.setAttribute('for', 'foundGenre');
+            genre.innerHTML = 'Genre: ';
+            findBlock.appendChild(genre);
+            let genreInput = document.createElement('p');
+            genre.setAttribute('id', 'foundTitle');
+            genreInput.innerHTML = serchObject['genre'];
+            findBlock.appendChild(genreInput);
+
+            let pages = document.createElement('label');
+            pages.setAttribute('for', 'foundGenre');
+            pages.innerHTML = 'Number of pages: ';
+            findBlock.appendChild(pages);
+            let pagesInput = document.createElement('p');
+            pages.setAttribute('id', 'foundPages');
+            pagesInput.innerHTML = serchObject['pages'];
+            findBlock.appendChild(pagesInput);
+        }
+    }
+    if (!find) {
+        alert('Book is not found!');
+    }
 }
