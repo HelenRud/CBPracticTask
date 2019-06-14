@@ -44,11 +44,6 @@ function fillTable(){
         exDataObject = JSON.parse(exDataJSON);
         addRow('authorsTable', allAuthorsIDArr[i], exDataObject['firstName'], exDataObject['patronymicName'], exDataObject['lastName'], exDataObject['birthday'], exDataObject['books']);
     }
-    // delBtnArr = document.querySelectorAll('.delBtn');
- 
-    // for (let i=0; i<delBtnArr.length; i++){
-    // delBtnArr[i].addEventListener('click', delItem, false);
-    // }
     firstNameTDs = document.querySelectorAll('td[data-col="firstName"]');
     patrNameTDs = document.querySelectorAll('td[data-col="patrName"]');
     lastNameTDs = document.querySelectorAll('td[data-col="lastName"]');
@@ -271,9 +266,9 @@ function addRow(id, key, td1Text, td2Text, td3Text, td4Text, td5Text){
 
 function addAuthor(){
     var newAuthor ={
-            firstName: firstName.value,
-            patronymicName: patronymicName.value,
-            lastName: lastName.value,
+            firstName: firstName.value.capitalize(),
+            patronymicName: patronymicName.value.capitalize(),
+            lastName: lastName.value.capitalize(),
             birthday: birthday.value,
             books: booksField.value
         }

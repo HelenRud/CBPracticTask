@@ -1,0 +1,9 @@
+{"key":"b100","title":"Automation and Robotics","genre":"IT","pages":789}
+{"key":"b101","title":"Einstein: His Life and Universe","genre":"Biography","pages":250}
+{"key":"b102","title":"Into the Wild","genre":"History","pages":546}
+{"key":"b103","title":"John Adams","genre":"Biography","pages":398}
+{"key":"b104","title":"And Then There Were None","genre":"Mystery","pages":400}
+{"key":"b105","title":"The Final Empire","genre":"Fantasy","pages":680}
+{"key":"a105","firstName":"Jane","patronymicName":"","lastName":"Seville","birthday":"1970-05-07","books":"Zero at the Bone, Date Night, Time After Time"}
+{"key":"a103","firstName":"John","patronymicName":"","lastName":"Marrs","birthday":"1964-11-24","books":"The Wronged Sons, The One, Her Last Move"}
+{"key":"a104","firstName":"Adam","patronymicName":"Carpenter","lastName":"Welles","birthday":"1975-02-12","books":"Scars and Voices"}

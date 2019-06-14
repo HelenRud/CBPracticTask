@@ -69,7 +69,6 @@ function saveGenreChanches(){
 
 function fillGenreSelect(genArr){
     for (let i = 0; i<genre.childNodes.length; i++){
-        console.log(genre.childNodes[i]);
     if ((genre.childNodes[i] !== firstOptionGenre) && (genre.childNodes[i] !== lastOptionGenre)){
         genre.removeChild(genre.childNodes[i]);
         i--;
@@ -253,13 +252,17 @@ function addBookRow(id, key, td1Text, td2Text, td3Text, td4Text, td5Text){
 
 btnAddBook.addEventListener('click', addBook, false);
 
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 function addBook(){
     if (genre.value == 'ownGenre')
         genreBook = ownGenre.value;
     else genreBook = genre.value;
         var newBook ={
-            title: title.value,
-            genre: genreBook,
+            title: title.value.capitalize(),
+            genre: genreBook.capitalize(),
             pages: pages.value,
         }
     bookID= 'b' + Math.round(0.5 + Math.random() * 1000);
@@ -388,8 +391,24 @@ function activeBtnBook(e){
 let findBlock = document.getElementById('findBlock');
 let searchBtn=document.getElementById('searchBtn');
 let bookSearch=document.getElementById('bookSearch');
+searchBtn.setAttribute('disabled', true);
+bookSearch.addEventListener('input', activSearch, false);
+//bookSearch.addEventListener('change', clearSearchResult, false);
+
+function activSearch(){
+    searchBtn.setAttribute('disabled', true);
+   if (bookSearch.value != ''){
+    searchBtn.removeAttribute('disabled');
+   }
+}
+function clearSearchResult(){
+    while (findBlock.firstChild){
+        findBlock.removeChild(findBlock.firstChild);
+    }
+}
 searchBtn.addEventListener('click', startSearch, false);
 function startSearch(){
+    clearSearchResult();  
     let find = false;
     let searchTitle = bookSearch.value;
     for (let i=0; i<titleTDs.length; i++){
@@ -398,35 +417,37 @@ function startSearch(){
             let searchID = titleTDs[i].getAttribute('data-id');
             getSearchJSON = window.localStorage.getItem(searchID);
             serchObject = JSON.parse(getSearchJSON);
-            let title = document.createElement('label');
-            title.setAttribute('for', 'foundTitle');
-            title.innerHTML = 'Title: ';
-            findBlock.appendChild(title);
-            let titleInput = document.createElement('p');
-            title.setAttribute('id', 'foundTitle');
-            titleInput.innerHTML = serchObject['title'];
-            findBlock.appendChild(titleInput);
+            
+            let divTitle = document.createElement('div');
+            divTitle.classList.add('form-row');
+            let divTitleCol = document.createElement('div');
+            divTitleCol.classList.add('col-md-6');
+            findBlock.appendChild(divTitle);
+            divTitle.appendChild(divTitleCol);
+            let title = document.createElement('p');
+            title.innerHTML = 'Title: ' + serchObject['title'];
+            divTitleCol.appendChild(title);
 
-            let genre = document.createElement('label');
-            genre.setAttribute('for', 'foundGenre');
-            genre.innerHTML = 'Genre: ';
-            findBlock.appendChild(genre);
-            let genreInput = document.createElement('p');
-            genre.setAttribute('id', 'foundTitle');
-            genreInput.innerHTML = serchObject['genre'];
-            findBlock.appendChild(genreInput);
-
-            let pages = document.createElement('label');
-            pages.setAttribute('for', 'foundGenre');
-            pages.innerHTML = 'Number of pages: ';
-            findBlock.appendChild(pages);
-            let pagesInput = document.createElement('p');
-            pages.setAttribute('id', 'foundPages');
-            pagesInput.innerHTML = serchObject['pages'];
-            findBlock.appendChild(pagesInput);
+            let divGenre = document.createElement('div');
+            divGenre.classList.add('form-row');
+            let divGenreCol = document.createElement('div');
+            divGenreCol.classList.add('col-md-6');
+            findBlock.appendChild(divGenre);
+            divGenre.appendChild(divGenreCol);
+            let genre = document.createElement('p');
+            genre.innerHTML = 'Genre: ' + serchObject['genre'];;
+            divGenreCol.appendChild(genre);
+            
+            let divPages = document.createElement('div');
+            findBlock.appendChild(divPages);
+            let pages = document.createElement('p');
+            pages.innerHTML = 'Number of pages: ' + serchObject['pages'];;
+            divPages.appendChild(pages);
         }
     }
     if (!find) {
+        bookSearch.value = '';
         alert('Book is not found!');
+        
     }
 }
