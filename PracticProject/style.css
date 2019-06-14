@@ -1,6 +1,18 @@
+#mainSection{
+    
+    background: url('img/bg-light-4866.png');
+      
+}
+#home{
+    background: no-repeat url('img/books-2777293_1920.jpg'); 
+    height: 500px;
+    background-size: contain; 
+
+}
+
 .table .thead-dark th{ 
     color: gainsboro;
-    font-size: 1.2em;
+    font-size: 0.9em;
     transition: all .3s;
 }
 
@@ -24,5 +36,22 @@
 .hideBlock{
     display: none;
 }
+/* #myTabContent{
+    min-height: calc(100vh - 280px); 
+} */
+html{
+
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+  body
+  {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
 
 

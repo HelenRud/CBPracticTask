@@ -1,3 +1,6 @@
+let booksTable = document.getElementById('booksTable');
+let authorsTable = document.getElementById('authorsTable');
+
 let loadBtn = document.getElementById('loadBtn');
 loadBtn.addEventListener('click', loadBaseData, false);
 function loadBaseData(){
@@ -20,9 +23,16 @@ function loadBaseData(){
         localStorage.setItem(dataObject['key'], JSON.stringify(dataObject));
         console.log(dataObject['key']);
     }
+    dellAllrows(authorsTable);
+    dellAllrows(booksTable);
     fillTable();
     fillBookTable();
-    
+    alert('Original data was successfully loaded. Please prosead to the "Library" or "Authors" menu tab to view result.')
 }
 
+function dellAllrows(table){
+    while (table.firstChild){
+       table.removeChild(table.firstChild);
+}
+}
 
